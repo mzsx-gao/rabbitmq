@@ -10,10 +10,10 @@ public class RabbitmqFactory {
 
     public static ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setAddresses("172.16.35.105:5672");
-        connectionFactory.setUsername("admin");
-        connectionFactory.setPassword("admin");
-        connectionFactory.setVirtualHost("/");
+        connectionFactory.setAddresses("172.16.6.51:9673");
+        connectionFactory.setUsername("xdt");
+        connectionFactory.setPassword("xdt");
+        connectionFactory.setVirtualHost("/loan");
         connectionFactory.setPublisherConfirms(true);
         return connectionFactory;
     }

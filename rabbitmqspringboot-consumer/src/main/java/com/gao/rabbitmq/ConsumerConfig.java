@@ -77,7 +77,7 @@ public class ConsumerConfig {
         connectionFactory.setUsername(msgUserName);
         connectionFactory.setPassword(msgPassword);
         connectionFactory.setPublisherConfirms(true);
-        connectionFactory.setVirtualHost("/");
+        connectionFactory.setVirtualHost("/loan");
         return connectionFactory;
     }
 
@@ -86,6 +86,8 @@ public class ConsumerConfig {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(new Jackson2JsonMessageConverter());
+        //SimpleMessageListenerContainer允许创建多个Session和MessageConsumer来接收消息。具体的个数由 concurrentConsumers属性指定
+        //concurrentConsumers:最小的消费者数目，maxConcurrentConsumers:最大的消费者数目
         factory.setConcurrentConsumers(2);
         factory.setMaxConcurrentConsumers(10);
         return factory;

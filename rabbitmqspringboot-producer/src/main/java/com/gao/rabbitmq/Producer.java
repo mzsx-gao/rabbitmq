@@ -1,13 +1,9 @@
 package com.gao.rabbitmq;
 
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.retry.RepublishMessageRecoverer;
 import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 import java.util.UUID;
 
 
@@ -25,9 +21,10 @@ public class Producer implements RabbitTemplate.ConfirmCallback{
         rabbitTemplate.setConfirmCallback(this);
     }
 
-    public void sendMsg(String content) {
+    public void sendMsg(Object content) {
         CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
-        rabbitTemplate.convertAndSend(ProducerConfig.EXCHANGE, ProducerConfig.ROUTINGKEY, content, correlationId);
+//        rabbitTemplate.convertAndSend(ProducerConfig.EXCHANGE, ProducerConfig.ROUTINGKEY, content, correlationId);
+        rabbitTemplate.convertAndSend("dev.channel_exchange","dev.channel_fenrun",content,correlationId);
         System.out.println("消息发送成功..."+System.currentTimeMillis());
     }
     /**
@@ -36,11 +33,11 @@ public class Producer implements RabbitTemplate.ConfirmCallback{
      */
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-        System.out.println(" 回调时间:"+System.currentTimeMillis()+" 回调id:" + correlationData);
-        if (ack) {
-            System.out.println("消息成功消费");
-        } else {
-            System.out.println("消息消费失败:" + cause);
-        }
+//        System.out.println(" 回调时间:"+System.currentTimeMillis()+" 回调id:" + correlationData);
+//        if (ack) {
+//            System.out.println("消息成功消费");
+//        } else {
+//            System.out.println("消息消费失败:" + cause);
+//        }
     }
 }

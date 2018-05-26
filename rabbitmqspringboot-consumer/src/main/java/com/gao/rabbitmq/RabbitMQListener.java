@@ -19,12 +19,12 @@ public class RabbitMQListener {
     public ConnectionFactory connectionFactory;
 
     @RabbitListener(containerFactory = "rabbitListenerContainerFactory",
-            bindings = @QueueBinding(value = @Queue(value = "spring-boot-queue", durable = "true"),
-                    exchange = @Exchange(value = "spring-boot-exchange", type = ExchangeTypes.DIRECT,durable = "true"),
+                    bindings = @QueueBinding(value = @Queue(value = "dev.channel_exchange", durable = "true"),
+                    exchange = @Exchange(value = "dev.channel_fenrun", type = ExchangeTypes.DIRECT,durable = "true"),
                     key = "spring-boot-routingKey"),
                     admin = "rabbitAdmin")
-    public void handlerMsg(String message){
 
+    public void handlerMsg(String message){
         System.out.println(System.currentTimeMillis()+"消费消息: " + message);
     }
 

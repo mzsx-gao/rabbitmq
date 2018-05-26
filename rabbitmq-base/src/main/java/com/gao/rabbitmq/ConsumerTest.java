@@ -6,13 +6,13 @@ import org.junit.Test;
 import java.io.IOException;
 
 /**
- *  * 名称: ConsumerTest.java <br>
- *  * 描述: <br>
- *  * 类型: JAVA <br>
- *  * 最近修改时间:2017/7/19 13:55.<br>
- *  * @version [版本号, V1.0]
- *  * @since 2017/7/19 13:55.
- *  * @author zhangchaobo
+ *  名称: ConsumerTest.java <br>
+ *  描述: 客户端测试类<br>
+ *  类型: JAVA <br>
+ *  最近修改时间:2017/7/19 13:55.<br>
+ *  @version [版本号, V1.0]
+ *  @since 2017/7/19 13:55.
+ *  @author gaoshudian
  */
 public class ConsumerTest {
 
@@ -70,7 +70,7 @@ public class ConsumerTest {
                 String message = new String(body, "UTF-8");
                 System.out.println("Worker1 消费消息... '" + message + "'");
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                     throw  new Exception();
                 }catch (Exception e){
                     System.out.println("worker1挂掉");
@@ -179,8 +179,7 @@ public class ConsumerTest {
         //根据路由关键字进行绑定
         for (String routingKey:routingKeys){
             channel.queueBind(queueName,EXCHANGE_NAME,routingKey);
-            System.out.println("消费者1.. 交换机:"+EXCHANGE_NAME+"," +
-                    " 队列:"+queueName+", routingKey:" + routingKey);
+            System.out.println("消费者1.. 交换机:"+EXCHANGE_NAME+"," + " 队列:"+queueName+", routingKey:" + routingKey);
         }
         System.out.println("消费者1等待...");
         Consumer consumer = new DefaultConsumer(channel) {
@@ -192,7 +191,9 @@ public class ConsumerTest {
         };
         channel.basicConsume(queueName, true, consumer);
         Thread.sleep(Integer.MAX_VALUE);
-    }@Test
+    }
+
+    @Test
     public void routingTest2() throws Exception{
 
         // 交换器名称
