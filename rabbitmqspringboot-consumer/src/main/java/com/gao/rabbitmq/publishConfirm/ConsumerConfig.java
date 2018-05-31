@@ -1,21 +1,15 @@
-package com.gao.rabbitmq;
+package com.gao.rabbitmq.publishConfirm;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-
-import java.util.Date;
 
 
 @Configuration
@@ -23,12 +17,6 @@ public class ConsumerConfig {
 
     public static final String EXCHANGE   = "spring-boot-exchange";
     public static final String ROUTINGKEY = "spring-boot-routingKey";
-
-
-    @Autowired
-    public ConnectionFactory connectionFactory;
-
-
 
     /**
      * 针对消费者配置
@@ -42,14 +30,12 @@ public class ConsumerConfig {
     @Bean
     public DirectExchange defaultExchange() {
         DirectExchange directExchange = new DirectExchange(EXCHANGE,true,false);
-        rabbitAdmin().declareExchange(directExchange);
         return directExchange;
     }
 
     @Bean
     public Queue queue() {
         Queue queue = new Queue("spring-boot-queue", true,false,false,null); //队列持久
-        rabbitAdmin().declareQueue(queue);
         return queue;
 
     }
@@ -57,15 +43,7 @@ public class ConsumerConfig {
     @Bean
     public Binding binding() {
         Binding binding =BindingBuilder.bind(queue()).to(defaultExchange()).with(ConsumerConfig.ROUTINGKEY);
-        rabbitAdmin().declareBinding(binding);
         return binding;
-    }
-
-    @Bean
-    public RabbitAdmin rabbitAdmin(){
-        RabbitAdmin admin = new RabbitAdmin(connectionFactory);
-        admin.setAutoStartup(true);
-        return admin;
     }
 
     @Bean
@@ -77,7 +55,7 @@ public class ConsumerConfig {
         connectionFactory.setUsername(msgUserName);
         connectionFactory.setPassword(msgPassword);
         connectionFactory.setPublisherConfirms(true);
-        connectionFactory.setVirtualHost("/loan");
+        connectionFactory.setVirtualHost("/mqtest");
         return connectionFactory;
     }
 

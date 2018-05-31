@@ -10,9 +10,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan
+//@ComponentScan(basePackages = {"com.gao.rabbitmq.director"})
+@ComponentScan(basePackages = {"com.gao.rabbitmq.fanout"})
+//@ComponentScan(basePackages = {"com.gao.rabbitmq.topic"})
 @ServletComponentScan
-@EnableRabbit
 public class StartupConsumer {
     public static void main(String[] args) {
         SpringApplication.run(StartupConsumer.class,args);

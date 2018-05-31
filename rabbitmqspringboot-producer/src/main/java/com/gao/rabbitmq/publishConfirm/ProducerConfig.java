@@ -1,4 +1,4 @@
-package com.gao.rabbitmq;
+package com.gao.rabbitmq.publishConfirm;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

@@ -19,7 +19,7 @@ public class ConsumerTest {
     //入门示例
     @Test
     public  void base() throws Exception{
-        String QUEUE_NAME="rabbitMQ.test";
+        String QUEUE_NAME="rabbitMQ.publishConfirm";
         Channel channel = RabbitMQUtil.getChannel();
         //  声明一个队列
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);

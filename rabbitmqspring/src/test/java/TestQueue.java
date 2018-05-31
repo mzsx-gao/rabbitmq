@@ -25,7 +25,7 @@ public class TestQueue {
             Map<String,Object> msg = new HashMap<>();
             msg.put("data","hello.."+routingKey+"!");
             String message = "routing key:" + routingKey;
-            mqProducer.sendDataToQueue("test-mq-exchange",routingKey,msg);
+            mqProducer.sendDataToQueue("publishConfirm-mq-exchange",routingKey,msg);
             System.out.println("生产消息..."+routingKey +"':'" + message);
         }
         Thread.sleep(Integer.MAX_VALUE);

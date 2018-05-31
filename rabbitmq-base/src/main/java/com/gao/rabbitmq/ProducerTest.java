@@ -15,7 +15,7 @@ import org.junit.Test;
  */
 public class ProducerTest {
 
-    public final static String QUEUE_NAME="rabbitMQ.test";
+    public final static String QUEUE_NAME="rabbitMQ.publishConfirm";
     public final static String QUEUE_NAME_TASK="task_queue";
 
     //入门示例
