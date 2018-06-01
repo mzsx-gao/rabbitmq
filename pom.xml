@@ -13,6 +13,7 @@
         <module>rabbitmqspringboot-producer</module>
         <module>rabbitmqspringboot-consumer</module>
         <module>rabbitmqutil</module>
+        <module>spring-retry</module>
     </modules>
     <packaging>pom</packaging>
 
