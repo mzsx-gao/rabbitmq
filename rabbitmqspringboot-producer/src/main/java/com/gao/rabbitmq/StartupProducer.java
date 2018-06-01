@@ -10,8 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 //@ComponentScan(basePackages = {"com.gao.rabbitmq.director"})
-@ComponentScan(basePackages = {"com.gao.rabbitmq.fanout"})
+//@ComponentScan(basePackages = {"com.gao.rabbitmq.fanout"})
 //@ComponentScan(basePackages = {"com.gao.rabbitmq.topic"})
+@ComponentScan(basePackages = {"com.gao.rabbitmq.deadletter2"})
 @ServletComponentScan
 public class StartupProducer {
     public static void main(String[] args) {
