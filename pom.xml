@@ -10,9 +10,8 @@
     <modules>
         <module>rabbitmq-base</module>
         <module>rabbitmqspring</module>
-        <module>rabbitmqspringboot-producer</module>
-        <module>rabbitmqspringboot-consumer</module>
-        <module>rabbitmqutil</module>
+        <module>springboot-producer</module>
+        <module>springboot-consumer</module>
         <module>spring-retry</module>
     </modules>
     <packaging>pom</packaging>

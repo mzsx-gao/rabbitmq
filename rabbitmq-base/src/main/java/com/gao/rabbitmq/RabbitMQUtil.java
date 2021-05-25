@@ -1,17 +1,10 @@
 package com.gao.rabbitmq;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.*;
 
 /**
- *  * 名称: RabbitMQUtil.java <br>
- *  * 描述: <br>
- *  * 类型: JAVA <br>
- *  * 最近修改时间:2017/7/19 14:41.<br>
- *  * @version [版本号, V1.0]
- *  * @since 2017/7/19 14:41.
- *  * @author gaoshudian
+ * 名称: RabbitMQUtil.java
+ * @author gaoshudian
  */
 public class RabbitMQUtil {
 
@@ -20,13 +13,19 @@ public class RabbitMQUtil {
         //创建连接工厂
         ConnectionFactory factory = new ConnectionFactory();
         //设置RabbitMQ相关信息
-        factory.setHost("172.16.6.51");
-        factory.setUsername("xdt");
-        factory.setPassword("xdt");
-        factory.setPort(9673);
-        factory.setVirtualHost("/loan");
+        factory.setHost("47.100.34.11");
+        factory.setUsername("admin");
+        factory.setPassword("admin");
+        factory.setPort(5672);
+        factory.setVirtualHost("/test");
         //创建一个新的连接
         Connection connection = factory.newConnection();
+        //连接关闭时执行
+        connection.addShutdownListener(new ShutdownListener() {
+            public void shutdownCompleted(ShutdownSignalException e) {
+                System.out.println("拦截关闭");
+            }
+        });
         //创建一个通道
         Channel channel = connection.createChannel();
         return channel;
