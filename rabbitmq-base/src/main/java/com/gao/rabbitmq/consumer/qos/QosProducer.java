@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
- *类说明：发送消息（发送210条消息，其中第210条消息表示本批次消息的结束）
+ * 类说明：发送消息（发送210条消息，其中第210条消息表示本批次消息的结束）
  */
 public class QosProducer {
 
