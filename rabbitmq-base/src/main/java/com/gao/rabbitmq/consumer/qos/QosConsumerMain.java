@@ -21,29 +21,26 @@ public class QosConsumerMain {
         String routekey = "error";/*表示只关注error级别的日志消息*/
         channel.queueBind(queueName,"direct_logs",routekey);
         System.out.println("waiting for message........");
-        /*声明了一个消费者*/
-        final Consumer consumer = new DefaultConsumer(channel){
-            @Override
-            public void handleDelivery(String consumerTag, Envelope envelope,
-                                       AMQP.BasicProperties properties, byte[] body) throws IOException {
-                String message = new String(body, "UTF-8");
-                System.out.println("Received["+envelope.getRoutingKey() +"]"+message);
-                //TODO 单条确认
-                //channel.basicAck(envelope.getDeliveryTag(),true);
-            }
-        };
 
-        //TODO 如果是两个消费者(QOS ,批量)则轮询获取数据
+        //方式一:单条确认
+//        final Consumer consumer = new DefaultConsumer(channel){
+//            @Override
+//            public void handleDelivery(String consumerTag, Envelope envelope,
+//                                       AMQP.BasicProperties properties, byte[] body) throws IOException {
+//                String message = new String(body, "UTF-8");
+//                System.out.println("Received["+envelope.getRoutingKey() +"]"+message);
+//                //单条确认
+//                channel.basicAck(envelope.getDeliveryTag(),false);
+//            }
+//        };
+//        channel.basicConsume(queueName,false,consumer);
 
-        //TODO 150条预取(150都取出来 150， 210-150  60  )
+        //方式二:批量确认
+        //如果是两个消费者(QOS ,批量)则轮询获取数据
+        //150条预取(150都取出来 150， 210-150  60  )
         channel.basicQos(150,true);
-        /*消费者正式开始在指定队列上消费消息*/
-        channel.basicConsume(queueName,false,consumer);
-        //TODO 自定义消费者批量确认
-        //BatchAckConsumer batchAckConsumer = new BatchAckConsumer(channel);
-        //channel.basicConsume(queueName,false,batchAckConsumer);
-
-
+        //自定义消费者批量确认
+        BatchAckConsumer batchAckConsumer = new BatchAckConsumer(channel);
+        channel.basicConsume(queueName,false,batchAckConsumer);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.gao.rabbitmq.consumer.qos;
+package com.gao.rabbitmq.rejectmsg;
 
 import com.gao.rabbitmq.RabbitMQUtil;
 import com.rabbitmq.client.Channel;
@@ -9,24 +9,19 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
- * 类说明：发送消息（发送210条消息，其中第210条消息表示本批次消息的结束）
+ * 存放到延迟队列的元素，对业务数据进行了包装
  */
-public class QosProducer {
+public class RejectProducer {
 
     public final static String EXCHANGE_NAME = "direct_logs";
 
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMQUtil.getChannel();
-        // 指定转发（备用交换机）
-        channel.exchangeDeclare("kajsdi", "direct");
-        //生产者发送非常多的数据
-        //发送210条消息，其中第210条消息表示本批次消息的结束
-        for(int i=0;i<210;i++){
+        channel.exchangeDeclare(EXCHANGE_NAME, "direct");
+        //所有日志严重性级别
+        for(int i=0;i<10;i++){
             // 发送的消息
             String message = "Hello World_"+(i+1);
-            if(i==209){ //最后一条
-                message = "stop";
-            }
             //参数1：exchange name
             //参数2：routing key
             channel.basicPublish(EXCHANGE_NAME, "error", null, message.getBytes());
