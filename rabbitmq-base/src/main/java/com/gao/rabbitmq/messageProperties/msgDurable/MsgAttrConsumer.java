@@ -1,10 +1,9 @@
-package com.gao.rabbitmq.msgdurable;
+package com.gao.rabbitmq.messageProperties.msgDurable;
 
 import com.gao.rabbitmq.RabbitMQUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 /**
  * 消息持久化的消费者

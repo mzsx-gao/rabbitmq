@@ -29,7 +29,9 @@ public class RejectRequeuConsumer {
                 try{
                     String message = new String(body, "UTF-8");
                     System.out.println("Received[" +envelope.getRoutingKey() +"]"+message);
-                    throw new RuntimeException("处理异常"+message);
+                    //消息确认
+                    channel.basicAck(envelope.getDeliveryTag(),false);
+//                    throw new RuntimeException("处理异常"+message);
                 }catch (Exception e){
                     e.printStackTrace();
                     //Reject方式拒绝(这里第2个参数决定是否重新投递)

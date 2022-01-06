@@ -14,8 +14,7 @@ import java.util.concurrent.TimeoutException;
 public class GetMessageConsumer {
 
 
-    public static void main(String[] argv)
-            throws IOException, TimeoutException, InterruptedException {
+    public static void main(String[] argv) throws IOException, TimeoutException, InterruptedException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("127.0.0.1");
 
@@ -23,17 +22,13 @@ public class GetMessageConsumer {
         Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();
 
-        channel.exchangeDeclare(GetMessageProducer.EXCHANGE_NAME,
-                "direct");
+        channel.exchangeDeclare(GetMessageProducer.EXCHANGE_NAME, "direct");
         // 声明一个队列
         String queueName = "focuserror";
-        channel.queueDeclare(queueName,
-                false,false,
-                false,null);
+        channel.queueDeclare(queueName, false,false, false,null);
 
         String routekey="error";//只关注error级别的日志，然后记录到文件中去。
-        channel.queueBind(queueName,
-                GetMessageProducer.EXCHANGE_NAME, routekey);
+        channel.queueBind(queueName, GetMessageProducer.EXCHANGE_NAME, routekey);
 
         System.out.println(" [*] Waiting for messages......");
         //TODO 无限循环拉取

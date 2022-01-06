@@ -1,10 +1,9 @@
-package com.gao.rabbitmq.setmsg;
+package com.gao.rabbitmq.messageProperties.setmsg;
 
 import com.gao.rabbitmq.RabbitMQUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 /**
 

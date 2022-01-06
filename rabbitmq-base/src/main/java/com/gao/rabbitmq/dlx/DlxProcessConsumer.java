@@ -8,7 +8,6 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * 普通的消费者，负责消费死信队列dlx_accept
- *
  */
 public class DlxProcessConsumer {
 

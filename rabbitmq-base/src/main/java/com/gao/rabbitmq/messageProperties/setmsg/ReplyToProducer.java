@@ -1,11 +1,10 @@
-package com.gao.rabbitmq.setmsg;
+package com.gao.rabbitmq.messageProperties.setmsg;
 
 import com.gao.rabbitmq.RabbitMQUtil;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
 import java.util.UUID;
-import java.util.concurrent.TimeoutException;
 
 /**
  * 消息的属性的控制

@@ -1,4 +1,4 @@
-package com.gao.rabbitmq.msgdurable;
+package com.gao.rabbitmq.messageProperties.msgDurable;
 
 import com.gao.rabbitmq.RabbitMQUtil;
 import com.rabbitmq.client.Channel;
