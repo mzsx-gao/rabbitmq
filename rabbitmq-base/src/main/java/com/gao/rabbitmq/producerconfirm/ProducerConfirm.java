@@ -22,8 +22,7 @@ public class ProducerConfirm {
             public void handleReturn(int replyCode, String replyText,
                                      String exchange, String routingKey,
                                      AMQP.BasicProperties properties,
-                                     byte[] body)
-                throws IOException {
+                                     byte[] body) throws IOException {
                 String message = new String(body);
                 System.out.println("RabbitMq返回的replyCode:  "+replyCode);
                 System.out.println("RabbitMq返回的replyText:  "+replyText);

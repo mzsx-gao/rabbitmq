@@ -7,16 +7,17 @@ import org.junit.Test;
 
 /**
  *  描述: 服务方测试类
- *  @author gaoshudian
+ *
+ * @author gaoshudian
  */
 public class Producer {
 
-    public final static String QUEUE_NAME="rabbitMQ.publishConfirm";
-    public final static String QUEUE_NAME_TASK="task_queue";
+    public final static String QUEUE_NAME = "rabbitMQ.publishConfirm";
+    public final static String QUEUE_NAME_TASK = "task_queue";
 
     //入门示例
     @Test
-    public void base() throws Exception{
+    public void base() throws Exception {
         Channel channel = RabbitMQUtil.getChannel();
         //  声明一个队列
         /**
@@ -44,17 +45,17 @@ public class Producer {
 
     //任务分发
     @Test
-    public void task_queue() throws Exception{
+    public void task_queue() throws Exception {
         Channel channel = RabbitMQUtil.getChannel();
         //  声明一个队列
         channel.queueDeclare(QUEUE_NAME_TASK, true, false, false, null);
         //分发信息
-        for (int i=0;i<10;i++){
-            String message="Hello RabbitMQ"+(i+1);
+        for (int i = 0; i < 10; i++) {
+            String message = "Hello RabbitMQ" + (i + 1);
             //因为在第一个参数选择了默认的exchange，而我们申明的队列叫task_queue，所以默认的，它在新建一个也叫task_queue的routingKey，
             //并绑定在默认的exchange上，导致了我们可以在第二个参数routingKey中写TaskQueue，这样它就会找到定义的同名的queue，并把消息放进去。
-            channel.basicPublish("",QUEUE_NAME_TASK, MessageProperties.PERSISTENT_TEXT_PLAIN,message.getBytes());
-            System.out.println("发送消息...'"+message+"'");
+            channel.basicPublish("", QUEUE_NAME_TASK, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
+            System.out.println("发送消息...'" + message + "'");
         }
         //关闭通道和连接
         channel.close();
@@ -63,14 +64,14 @@ public class Producer {
 
     //发布订阅模式
     @Test
-    public void fanoutTest() throws Exception{
+    public void fanoutTest() throws Exception {
         Channel channel = RabbitMQUtil.getChannel();
-        String EXCHANGE_NAME="logs";
-        channel.exchangeDeclare(EXCHANGE_NAME,"fanout");//fanout表示分发，所有的消费者得到同样的队列信息
+        String EXCHANGE_NAME = "logs";
+        channel.exchangeDeclare(EXCHANGE_NAME, "fanout");//fanout表示分发，所有的消费者得到同样的队列信息
         //分发信息
-        for (int i=0;i<10;i++){
-            String message="Hello World..."+i;
-            channel.basicPublish(EXCHANGE_NAME,"",null,message.getBytes());
+        for (int i = 0; i < 10; i++) {
+            String message = "Hello World..." + i;
+            channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes());
             System.out.println("EmitLog Sent '" + message + "'");
         }
         //关闭通道和连接
@@ -80,20 +81,20 @@ public class Producer {
 
     //直连模式
     @Test
-    public void routingTest() throws Exception{
+    public void routingTest() throws Exception {
 
-        String EXCHANGE_NAME="direct_logs";
+        String EXCHANGE_NAME = "direct_logs";
         // 路由关键字
-        String[] routingKeys = new String[]{"info" ,"warning", "error"};
+        String[] routingKeys = new String[]{"info", "warning", "error"};
         Channel channel = RabbitMQUtil.getChannel();
 
         //声明交换机
-        channel.exchangeDeclare(EXCHANGE_NAME,"direct");//注意是direct
+        channel.exchangeDeclare(EXCHANGE_NAME, "direct");//注意是direct
         //发送信息
-        for (String routingKey:routingKeys){
+        for (String routingKey : routingKeys) {
             String message = "routing key:" + routingKey;
-            channel.basicPublish(EXCHANGE_NAME,routingKey,null,message.getBytes());
-            System.out.println("生产消息..."+routingKey +"':'" + message);
+            channel.basicPublish(EXCHANGE_NAME, routingKey, null, message.getBytes());
+            System.out.println("生产消息..." + routingKey + "':'" + message);
         }
 
         //关闭通道和连接
@@ -104,30 +105,30 @@ public class Producer {
     /**
      * topic模式
      * 这种应该属于模糊匹配
-     *  *：可以替代一个词
-     *  #：可以替代0或者更多的词
+     * *：可以替代一个词
+     * #：可以替代0或者更多的词
      */
     @Test
-    public void topicTest() throws Exception{
-        String EXCHANGE_NAME="topic_logs";
+    public void topicTest() throws Exception {
+        String EXCHANGE_NAME = "topic_logs";
         // 路由关键字
         Channel channel = RabbitMQUtil.getChannel();
         //声明一个匹配模式的交换机
-        channel.exchangeDeclare(EXCHANGE_NAME,"topic");
+        channel.exchangeDeclare(EXCHANGE_NAME, "topic");
         //待发送的消息
-        String[] routingKeys=new String[]{
-                "quick.orange.rabbit",
-                "lazy.orange.elephant",
-                "quick.orange.fox",
-                "lazy.brown.fox",
-                "quick.brown.fox",
-                "quick.orange.male.rabbit",
-                "lazy.orange.male.rabbit"
+        String[] routingKeys = new String[]{
+            "quick.orange.rabbit",
+            "lazy.orange.elephant",
+            "quick.orange.fox",
+            "lazy.brown.fox",
+            "quick.brown.fox",
+            "quick.orange.male.rabbit",
+            "lazy.orange.male.rabbit"
         };
         //发送消息
-        for(String severity :routingKeys){
+        for (String severity : routingKeys) {
             channel.basicPublish(EXCHANGE_NAME, severity, null, severity.getBytes());
-            System.out.println("生产...交换机:"+EXCHANGE_NAME+" ,key:" + severity + ",消息:'" + severity + "'");
+            System.out.println("生产...交换机:" + EXCHANGE_NAME + " ,key:" + severity + ",消息:'" + severity + "'");
         }
         //关闭通道和连接
         channel.close();

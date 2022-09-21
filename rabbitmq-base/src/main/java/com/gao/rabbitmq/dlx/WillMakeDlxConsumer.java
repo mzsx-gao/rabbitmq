@@ -44,7 +44,7 @@ public class WillMakeDlxConsumer {
                     System.out.println("Received[" +envelope.getRoutingKey() +"]"+message);
                     channel.basicAck(envelope.getDeliveryTag(), false);
                 }else{
-                    //如果是其他的消息拒绝（queue=false），成为死信消息
+                    //如果是其他的消息拒绝（requeue=false），成为死信消息
                     System.out.println("Will reject[" +envelope.getRoutingKey() +"]"+message);
                     channel.basicReject(envelope.getDeliveryTag(), false);
                 }

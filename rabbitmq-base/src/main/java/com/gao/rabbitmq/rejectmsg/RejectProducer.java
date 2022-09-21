@@ -19,9 +19,9 @@ public class RejectProducer {
         Channel channel = RabbitMQUtil.getChannel();
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
         //所有日志严重性级别
-        for(int i=0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             // 发送的消息
-            String message = "Hello World_"+(i+1);
+            String message = "Hello World_" + (i + 1);
             //参数1：exchange name
             //参数2：routing key
             channel.basicPublish(EXCHANGE_NAME, "error", null, message.getBytes());

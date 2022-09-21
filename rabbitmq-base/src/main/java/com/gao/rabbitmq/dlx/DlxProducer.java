@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
- * 类说明：私信队列生产者
+ * 类说明：死信队列生产者
  */
 public class DlxProducer {
 

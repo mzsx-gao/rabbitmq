@@ -23,7 +23,7 @@ public class RabbitMQUtil {
         //连接关闭时执行
         connection.addShutdownListener(new ShutdownListener() {
             public void shutdownCompleted(ShutdownSignalException e) {
-                System.out.println("拦截关闭");
+                System.out.println("连接关闭");
             }
         });
         //创建一个通道
